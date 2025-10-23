@@ -44,4 +44,55 @@
   }
 
   console.log("[Leitfaden] Boot abgeschlossen.");
+
+// === Tastatur-Selbstcheck ===
+document.addEventListener("DOMContentLoaded", () => {
+  console.log("[Tastatur-Check] Initialisierung gestartet.");
+
+  const startBtn = document.getElementById("btn-start-tastatur");
+  const testArea = document.getElementById("tastatur-testarea");
+  const fertigBtn = document.getElementById("btn-fertig-tastatur");
+  const result = document.getElementById("result-tastatur");
+  const progressFill = document.getElementById("progress-fill");
+  const progressCount = document.getElementById("progress-count");
+
+  let completedChecks = 0;
+
+  if (!startBtn || !testArea || !fertigBtn || !result) {
+    console.error("[Tastatur-Check] DOM-Elemente fehlen.");
+    return;
+  }
+
+  startBtn.addEventListener("click", () => {
+    console.log("[Tastatur-Check] Gestartet durch Nutzer.");
+    testArea.hidden = false;
+    startBtn.disabled = true;
+    testArea.querySelector("button").focus();
+    result.textContent = "Check läuft – nutzen Sie die TAB-Taste …";
+    result.className = "result";
+  });
+
+  fertigBtn.addEventListener("click", () => {
+    console.log("[Tastatur-Check] Vom Nutzer als abgeschlossen markiert.");
+    testArea.hidden = true;
+    result.textContent = "Tastatur-Navigation erfolgreich geprüft ✔";
+    result.className = "result ok";
+
+    // Fortschritt aktualisieren
+    completedChecks = Math.min(completedChecks + 1, 3);
+    updateProgress();
+
+    console.log("[Tastatur-Check] Erfolg! Fortschritt jetzt:", completedChecks);
+  });
+
+  function updateProgress() {
+    const percent = (completedChecks / 3) * 100;
+    progressFill.style.width = percent + "%";
+    progressCount.textContent = `${completedChecks} / 3 abgeschlossen`;
+  }
+
+  console.log("[Tastatur-Check] Initialisierung abgeschlossen.");
+});
+
+  
 })();
