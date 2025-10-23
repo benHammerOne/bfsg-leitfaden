@@ -1,0 +1,16 @@
+[build]
+  publish = "public"
+  command = ""
+
+# Saubere URLs (optional; hier nicht zwingend nötig)
+[[redirects]]
+  from = "/index.html"
+  to = "/"
+  status = 301
+
+# Basis-Sicherheitsheader (leichtgewichtig)
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
