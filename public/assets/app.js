@@ -56,7 +56,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const progressFill = document.getElementById("progress-fill");
   const progressCount = document.getElementById("progress-count");
 
-  let completedChecks = 0;
+  // Globale Fortschrittsvariable initialisieren, falls noch nicht vorhanden
+if (typeof window.__bfsgCompletedChecks === "undefined") {
+  window.__bfsgCompletedChecks = 0;
+  console.log("[Global] Fortschrittszähler initialisiert:", window.__bfsgCompletedChecks);
+}
+
 
   if (!startBtn || !testArea || !fertigBtn || !result) {
     console.error("[Tastatur-Check] DOM-Elemente fehlen.");
@@ -79,10 +84,10 @@ document.addEventListener("DOMContentLoaded", () => {
     result.className = "result ok";
 
     // Fortschritt aktualisieren
-    completedChecks = Math.min(completedChecks + 1, 3);
+    window.__bfsgCompletedChecks = Math.min(window.__bfsgCompletedChecks + 1, 3);
     updateProgress();
 
-    console.log("[Tastatur-Check] Erfolg! Fortschritt jetzt:", completedChecks);
+    console.log("[Tastatur-Check] Erfolg! Fortschritt jetzt:", window.__bfsgCompletedChecks);
   });
 
   // === Kontrasteindruck-Check (A/B-Vergleich) ===
@@ -164,11 +169,12 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-  function updateProgress() {
-    const percent = (completedChecks / 3) * 100;
-    progressFill.style.width = percent + "%";
-    progressCount.textContent = `${completedChecks} / 3 abgeschlossen`;
-  }
+function updateProgress() {
+  const percent = (window.__bfsgCompletedChecks / 3) * 100;
+  progressFill.style.width = percent + "%";
+  progressCount.textContent = `${window.__bfsgCompletedChecks} / 3 abgeschlossen`;
+}
+
 
   console.log("[Tastatur-Check] Initialisierung abgeschlossen.");
 });
