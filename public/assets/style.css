@@ -40,3 +40,30 @@ footer {
   font-size: .875rem;
   color: #555;
 }
+
+/* --- Mini-Check-Styles --- */
+.check-item { margin-bottom: 2rem; }
+button { cursor: pointer; font: inherit; }
+#tastatur-testarea {
+  border: 2px dashed #ccc;
+  padding: 1rem;
+  margin-top: .5rem;
+}
+.result { font-weight: 600; margin-top: .5rem; }
+.result.ok { color: #007a33; }     /* Grün */
+.result.warn { color: #b00020; }   /* Rot */
+
+.progressbar {
+  height: .5rem;
+  background: #eee;
+  margin-top: .25rem;
+  border-radius: .25rem;
+  overflow: hidden;
+  width: 100%;
+}
+#progress-fill {
+  height: 100%;
+  width: 0%;
+  background: #007a33;
+  transition: width .4s ease;
+}
