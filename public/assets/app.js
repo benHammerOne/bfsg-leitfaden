@@ -1,43 +1,47 @@
-(function init() {
-  try {
-    console.log("[Leitfaden] App boot gestartet.");
+(function initLeitfaden() {
+  console.log("[Leitfaden] Boot startet...");
 
-    // Query-Parameter auslesen
+  try {
     const qp = new URLSearchParams(window.location.search);
     const domain = qp.get("domain");
+    const domainText = domain && domain.trim() ? domain.trim() : "— (kein Parameter übergeben)";
+    const elDomain = document.getElementById("js-domain");
 
-    if (!domain || !String(domain).trim()) {
-      console.warn("[Leitfaden] Kein ?domain= Parameter gefunden. Fallback auf '—'.");
-      setDomainText("— (kein Parameter übergeben)");
+    if (elDomain) {
+      elDomain.textContent = domainText;
+      console.log("[Leitfaden] Domain gesetzt:", domainText);
     } else {
-      console.log("[Leitfaden] Übergebene Domain:", domain);
-      setDomainText(domain.trim());
+      console.error("[Leitfaden] Element #js-domain fehlt im DOM.");
     }
 
-    // Weitere Boot-Checks
-    checkCriticalElements(["js-domain", "main"]);
-
-    console.log("[Leitfaden] App boot abgeschlossen – Seite funktionsbereit.");
+    // === Struktur-Check ===
+    checkLandmarks();
+    checkHeadings();
   } catch (err) {
-    console.error("[Leitfaden] Unerwarteter Fehler im Init:", err);
+    console.error("[Leitfaden] Unerwarteter Fehler:", err);
   }
 
-  function setDomainText(value) {
-    const el = document.getElementById("js-domain");
-    if (!el) {
-      console.error("[Leitfaden] #js-domain nicht gefunden – DOM stimmt nicht mit Erwartung überein.");
-      return;
-    }
-    el.textContent = value;
-  }
-
-  function checkCriticalElements(ids) {
-    ids.forEach((id) => {
-      const ok = !!document.getElementById(id);
-      console.log(`[Leitfaden] DOM-Check #${id}:`, ok ? "OK" : "FEHLT");
-      if (!ok) {
-        console.error(`[Leitfaden] Kritisches Element #${id} fehlt. Bitte index.html prüfen.`);
-      }
+  function checkLandmarks() {
+    const roles = ["banner", "navigation", "main", "contentinfo"];
+    console.groupCollapsed("[A11y-Check] Landmarks");
+    roles.forEach(role => {
+      const el = document.querySelector(`[role='${role}']`);
+      console.log(` • ${role}:`, el ? "✔ vorhanden" : "❌ fehlt");
+      if (!el) console.warn(`[A11y] Fehlendes Landmark-Element: ${role}`);
     });
+    console.groupEnd();
   }
+
+  function checkHeadings() {
+    const h1 = document.querySelectorAll("h1").length;
+    const h2 = document.querySelectorAll("h2").length;
+    const h3 = document.querySelectorAll("h3").length;
+    console.groupCollapsed("[A11y-Check] Headings");
+    console.log(` • h1: ${h1} | h2: ${h2} | h3: ${h3}`);
+    if (h1 !== 1) console.warn("[A11y] Es sollte genau ein h1 geben.");
+    if (h2 < 1) console.warn("[A11y] Keine h2-Überschriften gefunden.");
+    console.groupEnd();
+  }
+
+  console.log("[Leitfaden] Boot abgeschlossen.");
 })();
