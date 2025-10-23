@@ -67,3 +67,79 @@ button { cursor: pointer; font: inherit; }
   background: #007a33;
   transition: width .4s ease;
 }
+
+/* --- Accessibly Hidden (Screenreader only) --- */
+.sr-only {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0);
+  white-space: nowrap; border: 0;
+}
+
+/* --- Kontrast-Check Grid & Cards --- */
+.contrast-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin: .75rem 0;
+}
+.contrast-card {
+  display: flex;
+  flex-direction: column;
+  gap: .25rem;
+  align-items: flex-start;
+  text-align: left;
+  width: 100%;
+  border: 2px solid #ddd;
+  border-radius: .6rem;
+  padding: 1rem;
+  background: #fff;
+  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+}
+.contrast-card:focus-visible,
+.contrast-card:hover {
+  outline: none;
+  border-color: #007a33;
+  box-shadow: 0 0 0 4px rgba(0,122,51,.12);
+  transform: translateY(-1px);
+}
+.card-title { font-weight: 700; }
+.card-body  { font-size: .95rem; line-height: 1.45; }
+
+/* Gute Lesbarkeit – hoher Kontrast */
+.card-good {
+  color: #111;
+  background: #fff;
+  border-color: #cfd8dc;
+}
+
+/* Schlechte Lesbarkeit – geringer Kontrast (absichtlich grenzwertig) */
+.card-poor {
+  color: #6e6e6e;
+  background: #f2f3f5;
+  border-color: #e0e0e0;
+}
+
+/* Feedback + Badge */
+.badge {
+  display: inline-block;
+  margin-top: .5rem;
+  padding: .4rem .6rem;
+  border-radius: .5rem;
+  font-weight: 600;
+  background: #ecfdf5;   /* sanftes Grün */
+  color: #065f46;
+  border: 1px solid #10b981;
+}
+
+/* Kleine „Pulse“-Animation beim Erfolg */
+@keyframes pulse-ok {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
+.badge.show {
+  animation: pulse-ok .4s ease-in-out;
+}
+
