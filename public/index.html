@@ -38,11 +38,31 @@
 
     <section id="selbstcheck" aria-labelledby="h-selbstcheck">
       <h2 id="h-selbstcheck">Mini-Selbstcheck</h2>
-      <ol>
-        <li id="check-tastatur">Tastatur-Navigation – kommt später</li>
-        <li id="check-kontrast">Kontrasteindruck – kommt später</li>
-        <li id="check-erklärung">Auffindbarkeit Erklärung/Kontakt – kommt später</li>
-      </ol>
+<ol id="checks-list">
+  <li id="check-tastatur" class="check-item">
+    <h3>Tastatur-Navigation</h3>
+    <p>Drücken Sie den Button, um einen kurzen Tastatur-Test zu starten.</p>
+    <button id="btn-start-tastatur" type="button">Check starten</button>
+    <div id="tastatur-testarea" hidden>
+      <p>Mit der <kbd>TAB</kbd>-Taste können Sie durch diese Elemente springen:</p>
+      <button tabindex="0">Erster Fokus</button>
+      <button tabindex="0">Zweiter Fokus</button>
+      <a href="#" tabindex="0">Dritter Fokus</a>
+      <p><button id="btn-fertig-tastatur" type="button">Fertig</button></p>
+    </div>
+    <p id="result-tastatur" class="result" aria-live="polite"></p>
+  </li>
+
+  <li id="check-kontrast">Kontrasteindruck – kommt später</li>
+  <li id="check-erklärung">Auffindbarkeit Erklärung/Kontakt – kommt später</li>
+</ol>
+
+<!-- Fortschrittsanzeige -->
+<div id="progress" role="status" aria-live="polite">
+  <strong>Fortschritt:</strong> <span id="progress-count">0 / 3 abgeschlossen</span>
+  <div class="progressbar"><div id="progress-fill"></div></div>
+</div>
+
     </section>
 
     <section id="orientierung" aria-labelledby="h-orientierung">
