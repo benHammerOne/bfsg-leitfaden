@@ -85,6 +85,85 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log("[Tastatur-Check] Erfolg! Fortschritt jetzt:", completedChecks);
   });
 
+  // === Kontrasteindruck-Check (A/B-Vergleich) ===
+document.addEventListener("DOMContentLoaded", () => {
+  console.log("[Kontrast-Check] Initialisierung gestartet.");
+
+  // DOM-Hooks
+  const btnGood   = document.getElementById("btn-contrast-good");
+  const btnPoor   = document.getElementById("btn-contrast-poor");
+  const feedback  = document.getElementById("contrast-feedback");
+  const badge     = document.getElementById("contrast-badge");
+  const progressFill  = document.getElementById("progress-fill");
+  const progressCount = document.getElementById("progress-count");
+
+  // Wir greifen auf die gleiche Fortschritts-Logik zu wie beim Tastatur-Check,
+  // d. h. wir halten eine globale/übergreifende Zählung in window.
+  // Falls sie noch nicht existiert, initialisieren wir sie hier.
+  if (typeof window.__bfsgCompletedChecks === "undefined") {
+    window.__bfsgCompletedChecks = 0;
+    console.warn("[Kontrast-Check] __bfsgCompletedChecks war nicht gesetzt – initialisiere auf 0.");
+  }
+
+  function updateProgressUI() {
+    const percent = (window.__bfsgCompletedChecks / 3) * 100;
+    progressFill.style.width = percent + "%";
+    progressCount.textContent = `${window.__bfsgCompletedChecks} / 3 abgeschlossen`;
+  }
+
+  function setFeedback(msg, ok = true) {
+    feedback.textContent = msg;
+    feedback.className = "result " + (ok ? "ok" : "warn");
+  }
+
+  function showBadge() {
+    badge.hidden = false;
+    badge.setAttribute("aria-hidden", "false");
+    badge.classList.add("show");
+    setTimeout(() => badge.classList.remove("show"), 600);
+  }
+
+  function completeCheckIfNeeded() {
+    // Verhindern, dass mehrfach gezählt wird
+    if (!btnGood.disabled || !btnPoor.disabled) {
+      window.__bfsgCompletedChecks = Math.min(window.__bfsgCompletedChecks + 1, 3);
+      console.log("[Kontrast-Check] Check als abgeschlossen gezählt. Gesamt:", window.__bfsgCompletedChecks);
+      // Buttons deaktivieren, um Doppelzählung zu verhindern
+      btnGood.disabled = true;
+      btnPoor.disabled = true;
+      updateProgressUI();
+    } else {
+      console.log("[Kontrast-Check] Bereits abgeschlossen – kein erneutes Zählen.");
+    }
+  }
+
+  if (!btnGood || !btnPoor || !feedback || !badge) {
+    console.error("[Kontrast-Check] DOM-Elemente fehlen. Abbruch.");
+    return;
+  }
+
+  // Event: Nutzer wählt "Gut lesbar" (A)
+  btnGood.addEventListener("click", () => {
+    console.log("[Kontrast-Check] Auswahl: A – Gut lesbar (Nutzer empfindet Seite eher klar).");
+    setFeedback("Gut erkannt: Hoher Kontrast ist ein Kernfaktor für Lesbarkeit.", true);
+    showBadge();
+    completeCheckIfNeeded();
+  });
+
+  // Event: Nutzer wählt "Schwer lesbar" (B)
+  btnPoor.addEventListener("click", () => {
+    console.log("[Kontrast-Check] Auswahl: B – Schwer lesbar (Nutzer empfindet Seite eher problematisch).");
+    setFeedback("Wichtig: Prüfen Sie echte Text-Kontraste. Sie haben ein gutes Gefühl für potenzielle Risiken.", true);
+    showBadge();
+    completeCheckIfNeeded();
+  });
+
+  // UI initial setzen
+  updateProgressUI();
+  console.log("[Kontrast-Check] Initialisierung abgeschlossen.");
+});
+
+
   function updateProgress() {
     const percent = (completedChecks / 3) * 100;
     progressFill.style.width = percent + "%";
