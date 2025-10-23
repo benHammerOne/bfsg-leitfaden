@@ -39,6 +39,7 @@
     <section id="selbstcheck" aria-labelledby="h-selbstcheck">
       <h2 id="h-selbstcheck">Mini-Selbstcheck</h2>
 <ol id="checks-list">
+  <!-- Check 1: Tastatur (bestehender Block bleibt) -->
   <li id="check-tastatur" class="check-item">
     <h3>Tastatur-Navigation</h3>
     <p>Drücken Sie den Button, um einen kurzen Tastatur-Test zu starten.</p>
@@ -53,15 +54,46 @@
     <p id="result-tastatur" class="result" aria-live="polite"></p>
   </li>
 
-  <li id="check-kontrast">Kontrasteindruck – kommt später</li>
-  <li id="check-erklärung">Auffindbarkeit Erklärung/Kontakt – kommt später</li>
+  <!-- Check 2: Kontrasteindruck (NEU) -->
+  <li id="check-kontrast" class="check-item">
+    <h3>Kontrasteindruck</h3>
+    <p>Welche der beiden Karten wirkt Ihrer Website beim Lesen eher ähnlich?</p>
+
+    <div class="contrast-grid" role="group" aria-label="Kontrasteindruck auswählen">
+      <!-- Karte A: GUTE Lesbarkeit -->
+      <button class="contrast-card card-good" id="btn-contrast-good" type="button" aria-describedby="desc-good">
+        <span class="card-title">A – Gut lesbar</span>
+        <span class="card-body">Klarer Text, ausreichender Kontrast, ruhiges Layout.</span>
+      </button>
+      <p id="desc-good" class="sr-only">Beispielkarte mit hoher Lesbarkeit und ausreichendem Kontrast.</p>
+
+      <!-- Karte B: SCHLECHTE Lesbarkeit -->
+      <button class="contrast-card card-poor" id="btn-contrast-poor" type="button" aria-describedby="desc-poor">
+        <span class="card-title">B – Schwer lesbar</span>
+        <span class="card-body">Geringer Kontrast, flimmernde Akzente, unruhig.</span>
+      </button>
+      <p id="desc-poor" class="sr-only">Beispielkarte mit geringer Lesbarkeit und niedrigem Kontrast.</p>
+    </div>
+
+    <div id="contrast-feedback" class="result" aria-live="polite"></div>
+    <div id="contrast-badge" class="badge" hidden aria-hidden="true" role="status">
+      ✅ Kontrast-Kompetenz: Sie haben den Unterschied korrekt eingeschätzt.
+    </div>
+  </li>
+
+  <!-- Check 3: Auffindbarkeit (Platzhalter) -->
+  <li id="check-erklärung" class="check-item">
+    <h3>Auffindbarkeit Erklärung/Kontakt</h3>
+    <p><em>Kommt in Schritt 5.</em></p>
+  </li>
 </ol>
 
-<!-- Fortschrittsanzeige -->
+<!-- Fortschrittsanzeige (bestehend) -->
 <div id="progress" role="status" aria-live="polite">
   <strong>Fortschritt:</strong> <span id="progress-count">0 / 3 abgeschlossen</span>
   <div class="progressbar"><div id="progress-fill"></div></div>
 </div>
+
 
     </section>
 
