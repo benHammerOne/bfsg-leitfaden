@@ -8,3 +8,35 @@ a { text-decoration: underline; }
 a:focus-visible, button:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
 .lede { font-size: 1.1rem; }
 [aria-disabled="true"] { pointer-events: none; opacity: .6; }
+
+/* --- Navigation & Layout --- */
+.nav-links ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem 1rem;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem 0;
+}
+.nav-links a {
+  background: #f5f5f5;
+  padding: .4rem .8rem;
+  border-radius: .5rem;
+  text-decoration: none;
+  color: #111;
+}
+.nav-links a:hover,
+.nav-links a:focus-visible {
+  background: #e5e5e5;
+}
+section {
+  margin-bottom: 2rem;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 1rem;
+}
+footer {
+  border-top: 1px solid #ddd;
+  margin-top: 2rem;
+  font-size: .875rem;
+  color: #555;
+}
